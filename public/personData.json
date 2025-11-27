@@ -1,0 +1,19 @@
+{
+  "data": {
+    "name": "kamida",
+    "realName": "石浩",
+    "age": 20,
+    "avatar": "/img/avatar.jpg",
+    "interests": ["reading", "traveling", "programming", "photography"],
+    "contact": {
+      "email": "kamida@example.com",
+      "social": {
+        "github": "https://github.com/shihao-lao",
+        "twitter": "https://twitter.com/kamida_dev",
+        "zhihu": "https://www.zhihu.com/people/kamida",
+        "weibo": "https://weibo.com/kamida"
+      }
+    },
+    "bio": "热爱技术的前端开发者，喜欢分享学习心得和技术见解。"
+  }
+}

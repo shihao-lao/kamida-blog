@@ -1,8 +1,8 @@
 ---
-title: "Hello World"
+title: "call-apply-bind"
 date: "2025-11-12"
-tag: "Next.js"
-category: "Next.js"
+tag: "JavaScript"
+category: "JavaScript"
 ---
 # call-apply-bind
 
