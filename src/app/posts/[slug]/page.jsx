@@ -15,14 +15,15 @@ const renderer = new marked.Renderer();
 renderer.heading = function ({ text, depth }) {
   // 获取纯文本（去除可能存在的内联 HTML）
   const textStr = text || "";
-  
+
   // 生成 ID 的逻辑：
   // 1. 转小写
   // 2. 将空格替换为连字符
   // 3. 移除非中文、非字母数字、非连字符的特殊符号 (保留中文)
-  const escapedText = textStr.toLowerCase()
-    .replace(/\s+/g, '-') 
-    .replace(/[^\w\u4e00-\u9fa5\-]/g, ''); 
+  const escapedText = textStr
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^\w\u4e00-\u9fa5\-]/g, "");
 
   // 添加 scroll-mt-20 是为了防止跳转后标题被顶部 Header 遮挡
   return `<h${depth} id="${escapedText}" class="scroll-mt-24 relative group">
@@ -33,22 +34,24 @@ renderer.heading = function ({ text, depth }) {
 };
 
 // 2. 配置代码块高亮
-renderer.code = function({ text, lang }) {
+renderer.code = function ({ text, lang }) {
   // 检查语言是否有效
-  const validLang = lang && hljs.getLanguage(lang) ? lang : 'plaintext';
-  
+  const validLang = lang && hljs.getLanguage(lang) ? lang : "plaintext";
+
   try {
     const highlighted = hljs.highlight(text, { language: validLang }).value;
     // 使用更深的颜色并移除灰色背景
-    return `<pre class=" rounded-lg overflow-x-auto text-base bg-transparent dark:bg-transparent border border-gray-200 dark:border-gray-700"><code class="language-${validLang} text-gray-800 dark:text-gray-200">${highlighted}</code></pre>`;
+    return `<pre class=" overflow-x-auto text-base bg-transparent dark:bg-transparent border border-gray-200 dark:border-gray-700"><code class="language-${validLang} text-gray-800 dark:text-gray-200">${highlighted}</code></pre>`;
   } catch (error) {
-    return `<pre class=" rounded-lg overflow-x-auto text-base bg-transparent dark:bg-transparent border border-gray-200 dark:border-gray-700"><code class="text-gray-800 dark:text-gray-200">${text}</code></pre>`;
+    return `<pre class="overflow-x-auto text-base bg-transparent dark:bg-transparent border border-gray-200 dark:border-gray-700"><code class="text-gray-800 dark:text-gray-200">${text}</code></pre>`;
   }
 };
 
 // 3. 链接在新标签页打开（可选）
-renderer.link = function({ href, title, text }) {
-  return `<a href="${href}" title="${title || ''}" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">${text}</a>`;
+renderer.link = function ({ href, title, text }) {
+  return `<a href="${href}" title="${
+    title || ""
+  }" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-800 underline">${text}</a>`;
 };
 
 // 4. 应用配置
@@ -75,13 +78,12 @@ export default async function PostPage({ params }) {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-15 transition-colors duration-300">
       <article className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        
         {/* 文章头部 */}
         <header className="mb-12 text-center">
           <h1 className="text-3xl md:text-5xl font-extrabold mb-6 text-gray-900 dark:text-white tracking-tight leading-tight">
             {data.title}
           </h1>
-          
+
           <div className="flex justify-center items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
             {data.date && (
               <time dateTime={data.date} className="flex items-center">
@@ -98,7 +100,7 @@ export default async function PostPage({ params }) {
 
         {/* 文章内容 */}
         <div className=" dark:bg-gray-800 rounded-2xl md:p-12">
-          <div 
+          <div
             className="
               prose prose-lg max-w-none 
               dark:prose-invert 
@@ -106,17 +108,17 @@ export default async function PostPage({ params }) {
               prose-p:text-gray-600 dark:prose-p:text-gray-300 prose-p:leading-8
               prose-li:text-gray-600 dark:prose-li:text-gray-300
               prose-strong:text-blue-600 dark:prose-strong:text-blue-400
-              prose-code:bg-gray-100 dark:prose-code:bg-gray-700 prose-code:px-1 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
+              prose-code:bg-gray-100 dark:prose-code:bg-gray-700 prose-code:px-1 prose-code: prose-code:before:content-none prose-code:after:content-none
             "
-            dangerouslySetInnerHTML={{ __html: htmlContent }} 
+            dangerouslySetInnerHTML={{ __html: htmlContent }}
           />
         </div>
 
         {/* 底部导航或版权信息 */}
         <div className="mt-10 border-t border-gray-200 dark:border-gray-700 pt-6 text-center text-gray-500 text-sm">
+          <p>本文由AI辅助生成，仅供学习参考。</p>
           <p>感谢阅读！</p>
         </div>
-
       </article>
     </div>
   );

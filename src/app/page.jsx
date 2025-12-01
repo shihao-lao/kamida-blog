@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { getAllPosts } from "@/lib/posts";
 import { Calendar } from "lucide-react";
+import Footer from "@/components/Footer";
 
 export default async function HomePage() {
   const posts = await getAllPosts();
@@ -18,7 +19,7 @@ export default async function HomePage() {
     <div className="min-h-screen bg-white">
 
       {/* 顶部花纹横幅背景 */}
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-200/20 to-transparent shadow-lg -z-10"></div>
+      {/* <div className="absolute inset-0 bg-gradient-to-b from-purple-200/20 to-transparent shadow-lg -z-10"></div>
       <div className="relative w-full h-[850px] md:h-[900px] overflow-hidden flex items-center justify-center">
         <Image
           src="/img/background.jpg"
@@ -27,12 +28,19 @@ export default async function HomePage() {
           width={1920}
           height={1920}
         />
+      </div> */}
+    {/* 欢迎title */}
+    <div className="container mx-auto px-4 md:px-6 pt-16">
+      <div className="text-center animate-fadeIn">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+          欢迎来到Kamida的个人博客
+        </h1>
       </div>
-
+    </div>
       {/* 主要内容区域 */}
-      <div className="container mx-auto px-4 md:px-6 pt-16">
+      <div className="container mx-auto px-4 md:px-6 pt-16 ">
         {/* 博主信息和标题 */}
-        <div className="text-center md:text-left md:pl-40 mb-8">
+        <div className="text-center md:text-left md:pl-40 mb-8 animate-fadeIn">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
             Blogger
           </h1>
@@ -47,9 +55,9 @@ export default async function HomePage() {
         {/* 侧边栏导航和主内容区 */}
         <div className="flex flex-col lg:flex-row gap-8">
           {/* 左侧导航 */}
-          <div className="lg:w-1/4">
-            <div className="bg-gray-50 rounded-xl p-20 sticky top-4">
-              <div className="space-y-2 mb-6">
+          <div className="lg:w-1/4 animate-leftIn">
+            <div className="bg-gray-50 rounded-xl py-20 sticky top-4">
+              <div className="space-y-2 mb-6 ju">
                 {/* 左侧头像区域 */}
                 <Image
                   src="/img/avatar.jpg"
@@ -58,7 +66,7 @@ export default async function HomePage() {
                   width={120}
                   height={120}
                 />
-                <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all">
+                {/* <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all">
                   <span className="w-6 h-6 flex items-center justify-center text-blue-600">
                     📝
                   </span>
@@ -71,7 +79,7 @@ export default async function HomePage() {
                     🖼️
                   </span>
                   <span className="font-medium text-gray-800">Gallery</span>
-                </div>
+                </div> */}
               </div>
               
               {/* 座右铭 */}
@@ -92,13 +100,13 @@ export default async function HomePage() {
                     </span>
                     <span className="text-sm text-gray-700">GitHub</span>
                   </a>
-                  <a href="https://twitter.com/kamida_dev" className="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all" target="_blank" rel="noopener noreferrer">
+                  <a href="https://juejin.cn/user/3994957074930676" className="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all" target="_blank" rel="noopener noreferrer">
                     <span className="w-6 h-6 flex items-center justify-center text-blue-400">
                       🐦
                     </span>
-                    <span className="text-sm text-gray-700">Twitter</span>
+                    <span className="text-sm text-gray-700">稀土掘金</span>
                   </a>
-                  <a href="https://www.zhihu.com/people/kamida" className="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all" target="_blank" rel="noopener noreferrer">
+                  {/* <a href="https://www.zhihu.com/people/kamida" className="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all" target="_blank" rel="noopener noreferrer">
                     <span className="w-6 h-6 flex items-center justify-center text-blue-500">
                       🧠
                     </span>
@@ -109,32 +117,16 @@ export default async function HomePage() {
                       📱
                     </span>
                     <span className="text-sm text-gray-700">微博</span>
-                  </a>
+                  </a> */}
                 </div>
               </div>
 
-              <div>
-                <h3 className="font-bold text-gray-900 mb-3 uppercase text-sm tracking-wider">
-                  POSTS
-                </h3>
-                <div className="space-y-1">
-                  {safePosts.slice(0, 4).map((post) => (
-                    <Link
-                      key={post.slug}
-                      href={`/posts/${post.slug}`}
-                      className="flex items-center gap-2 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all text-sm text-gray-700"
-                    >
-                      <span className="w-1 h-1 bg-gray-400 rounded-full"></span>
-                      <span className="truncate">{post.title}</span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
+         
             </div>
           </div>
 
           {/* 右侧主内容区 */}
-          <div className="lg:w-3/4">
+          <div className="lg:w-3/4 animate-rightIn">
             {/* 分类标签 */}
             {/* <div className="flex flex-wrap gap-3 mb-8">
               {categories.map((category) => (
@@ -164,36 +156,40 @@ export default async function HomePage() {
                   </div>
 
                   {/* 该标签下的文章列表 */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                  <div className="space-y-6">
                     {postsByCategory.map((post) => (
                       <Link
                         href={`/posts/${post.slug}`}
                         key={post.slug}
-                        className="block bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300"
+                        className="block bg-white border border-gray-200 rounded-xl overflow-hidden hover:shadow-lg transition-all duration-300 p-5"
                       >
-                        <div className="aspect-video bg-gradient-to-br from-blue-100 to-purple-100 relative">
-                          {post.image && (
-                            <Image
-                              src={post.image}
-                              alt={post.title}
-                              className="w-full h-full object-cover"
-                              width={400}
-                              height={225}
-                            />
-                          )}
-                        </div>
-
-                        <div className="p-4">
-                          <h3 className="font-bold text-gray-900 mb-2 line-clamp-2">
+                        <div>
+                          <h3 className="text-2xl font-bold text-blue-600 mb-3">
                             {post.title}
                           </h3>
-                          <p className="text-sm text-gray-500 mb-3 line-clamp-1">
-                            {post.author || "Pit Cai"}
-                          </p>
-                          <div className="flex items-center text-xs text-gray-400">
-                            <Calendar className="w-3 h-3 mr-1" />
+                          <div className="flex items-center text-sm text-gray-500 mb-4">
                             <span>{post.date || "未知日期"}</span>
                           </div>
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {post.tag && Array.isArray(post.tag) ? (
+                              post.tag.map((tag) => (
+                                <span key={tag} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
+                                  {tag}
+                                </span>
+                              ))
+                            ) : post.tag ? (
+                              <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
+                                {post.tag}
+                              </span>
+                            ) : post.category ? (
+                              <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
+                                {post.category}
+                              </span>
+                            ) : null}
+                          </div>
+                          <p className="text-gray-800 line-clamp-2">
+                            {post.excerpt || `# ${post.title} ...`}
+                          </p>
                         </div>
                       </Link>
                     ))}
@@ -201,6 +197,7 @@ export default async function HomePage() {
                 </div>
               );
             })}
+            
 
             {/* 空状态 */}
             {safePosts.length === 0 && (
@@ -212,10 +209,8 @@ export default async function HomePage() {
         </div>
       </div>
 
-      {/* 页脚 */}
-      <footer className="mt-20 py-6 border-t border-gray-200 text-center text-gray-500 text-sm">
-        <p>© 2025 Kamida&apos;s Blog. All rights reserved.</p>
-      </footer>
+      {/* 页脚组件 */}
+      <Footer />
     </div>
   );
 }

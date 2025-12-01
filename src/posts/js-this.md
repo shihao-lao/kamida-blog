@@ -1,7 +1,7 @@
 ---
 title: "JS中的this"
 date: "2025-11-12"
-tag: "JavaScript"
+tag: "Js,this"
 category: "JavaScript"
 --- 
 # JS中的this
