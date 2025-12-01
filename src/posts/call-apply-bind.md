@@ -1,6 +1,6 @@
 ---
 title: "call-apply-bind"
-date: "2025-11-12"
+date: "2025-5-18"
 tag: "JavaScript"
 category: "JavaScript"
 ---

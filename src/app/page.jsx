@@ -56,7 +56,7 @@ export default async function HomePage() {
         <div className="flex flex-col lg:flex-row gap-8">
           {/* 左侧导航 */}
           <div className="lg:w-1/4 animate-leftIn">
-            <div className="bg-gray-50 rounded-xl py-20 sticky top-4">
+            <div className="bg-gray-50 rounded-xl py-10 sticky top-4">
               <div className="space-y-2 mb-6 ju">
                 {/* 左侧头像区域 */}
                 <Image

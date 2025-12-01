@@ -1,10 +1,10 @@
+
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { marked } from "marked";
 import { notFound } from "next/navigation";
 import hljs from "highlight.js"; // 引入代码高亮库
-
 // 1. 创建自定义渲染器
 const renderer = new marked.Renderer();
 
@@ -74,10 +74,33 @@ export default async function PostPage({ params }) {
 
   // 解析 Markdown
   const htmlContent = marked.parse(content);
+  
+  // 在服务器端生成随机背景图片
+  // 对于静态生成的页面，这会在构建时生成一次
+  // 对于动态生成的页面，这会在服务器请求时生成一次
+  const backgroundImages = [
+    '/img/text1.jpg',
+    '/img/text2.jpg',
+    '/img/text3.jpg',
+    '/img/text4.jpg'
+  ];
+  const randomBackground = backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
+
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-15 transition-colors duration-300">
-      <article className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+    <div 
+      className="min-h-screen py-15 relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${randomBackground})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed'
+      }}
+    >
+      {/* 模糊覆盖层 */}
+      <div className="absolute inset-0  opacity-5 backdrop-blur-lg z-0"></div>
+      <article className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10">
         {/* 文章头部 */}
         <header className="mb-12 text-center">
           <h1 className="text-3xl md:text-5xl font-extrabold mb-6 text-gray-900 dark:text-white tracking-tight leading-tight">
@@ -99,7 +122,7 @@ export default async function PostPage({ params }) {
         </header>
 
         {/* 文章内容 */}
-        <div className=" dark:bg-gray-800 rounded-2xl md:p-12">
+        <div className="bg-white opacity-80 dark:bg-gray-800 dark:bg-opacity-90 rounded-2xl md:p-12 shadow-xl">
           <div
             className="
               prose prose-lg max-w-none 
