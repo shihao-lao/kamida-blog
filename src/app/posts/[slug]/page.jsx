@@ -5,6 +5,7 @@ import { marked } from "marked";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import hljs from "highlight.js"; // 引入代码高亮库
+
 // 1. 创建自定义渲染器
 const renderer = new marked.Renderer();
 
@@ -25,7 +26,7 @@ renderer.heading = function ({ text, depth }) {
     .replace(/\s+/g, "-")
     .replace(/[^\w\u4e00-\u9fa5\-]/g, "");
 
-  // 添加 scroll-mt-20 是为了防止跳转后标题被顶部 Header 遮挡
+  // 添加 scroll-mt-24 是为了防止跳转后标题被顶部 Header 遮挡
   return `<h${depth} id="${escapedText}" class="scroll-mt-24 relative group">
     <a href="#${escapedText}" class="no-underline hover:underline">
       ${textStr}
@@ -75,17 +76,18 @@ export default async function PostPage({ params }) {
   // 解析 Markdown
   const htmlContent = marked.parse(content);
 
-  // 在服务器端生成随机背景图片
-  // 对于静态生成的页面，这会在构建时生成一次
-  // 对于动态生成的页面，这会在服务器请求时生成一次
+  // 在服务器端生成伪随机背景图片 (基于 slug 固定)
   const backgroundImages = [
     "/img/text1.jpg",
     "/img/text2.jpg",
     "/img/text3.jpg",
     "/img/text4.jpg",
   ];
-  const randomBackground =
-    backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
+
+  // ✅ 核心修改：不再使用 Math.random()
+  // 计算 slug 字符串所有字符的 ASCII 码之和，确保同一篇文章始终对应同一张背景图
+  const sum = slug.split("").reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const randomBackground = backgroundImages[sum % backgroundImages.length];
 
   return (
     <div
@@ -103,13 +105,14 @@ export default async function PostPage({ params }) {
       <article className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10">
         {/* 返回首页链接 */}
         <div className="mb-8 text-left">
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200"
           >
             <span className="mr-1">←</span> 返回首页
           </Link>
         </div>
+        
         {/* 文章头部 */}
         <header className="mb-12 text-center">
           <h1 className="text-3xl md:text-5xl font-extrabold mb-6 text-gray-900 dark:text-white tracking-tight leading-tight">
