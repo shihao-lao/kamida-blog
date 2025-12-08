@@ -17,7 +17,6 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen bg-white">
-
       {/* 顶部花纹横幅背景 */}
       {/* <div className="absolute inset-0 bg-gradient-to-b from-purple-200/20 to-transparent shadow-lg -z-10"></div>
       <div className="relative w-full h-[850px] md:h-[900px] overflow-hidden flex items-center justify-center">
@@ -29,14 +28,14 @@ export default async function HomePage() {
           height={1920}
         />
       </div> */}
-    {/* 欢迎title */}
-    <div className="container mx-auto px-4 md:px-6 pt-16">
-      <div className="text-center animate-fadeIn">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-          欢迎来到Kamida的个人博客
-        </h1>
+      {/* 欢迎title */}
+      <div className="container mx-auto px-4 md:px-6 pt-16">
+        <div className="text-center animate-fadeIn">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+            欢迎来到Kamida的个人博客
+          </h1>
+        </div>
       </div>
-    </div>
       {/* 主要内容区域 */}
       <div className="container mx-auto px-4 md:px-6 pt-16 ">
         {/* 博主信息和标题 */}
@@ -57,50 +56,68 @@ export default async function HomePage() {
           {/* 左侧导航 */}
           <div className="lg:w-1/4 animate-leftIn">
             <div className="bg-gray-50 rounded-xl py-10 sticky top-4">
-              <div className="space-y-2 mb-6 ju">
+              <div className="flex items-center justify-between gap-4 mb-6 px-4">
                 {/* 左侧头像区域 */}
-                <Image
-                  src="/img/avatar.jpg"
-                  alt="博主头像"
-                  className=" object-cover rounded-full"
-                  width={120}
-                  height={120}
-                />
-                {/* <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all">
-                  <span className="w-6 h-6 flex items-center justify-center text-blue-600">
-                    📝
-                  </span>
-                  <span className="font-medium text-gray-800">Blogger</span>
+                <div className="flex-shrink-0">
+                  <Image
+                    src="/img/avatar.jpg"
+                    alt="博主头像"
+                    className=" object-cover rounded-full"
+                    width={120}
+                    height={120}
+                  />
                 </div>
-                <div
-                  className="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all"
-                >
-                  <span className="w-6 h-6 flex items-center justify-center text-purple-600">
-                    🖼️
-                  </span>
-                  <span className="font-medium text-gray-800">Gallery</span>
-                </div> */}
+
+                {/* 右侧路由跳转 */}
+                <div className="flex-grow flex flex-col items-end space-y-3">
+                  <Link
+                    href="/"
+                    className="text-gray-600  font-medium  transition-colors duration-200"
+                  >
+                    首页
+                  </Link>
+                  <Link
+                    href="/about"
+                    className="text-gray-600  font-medium  transition-colors duration-200"
+                  >
+                    关于我
+                  </Link>
+                </div>
               </div>
-              
+
               {/* 座右铭 */}
               <div className="mb-8">
                 <div className="text-sm text-gray-600 italic mb-3">Motto</div>
                 <div className="bg-white p-4 rounded-lg shadow-sm">
-                  <p className="text-gray-800">热爱技术的前端开发者，喜欢分享学习心得和技术见解。</p>
+                  <p className="text-gray-800">
+                    热爱技术的前端开发者，喜欢分享学习心得和技术见解。
+                  </p>
                 </div>
               </div>
-              
+
               {/* 社交媒体链接 */}
               <div className="mb-6">
-                <div className="text-sm font-bold text-gray-900 mb-3 uppercase tracking-wider">Social</div>
+                <div className="text-sm font-bold text-gray-900 mb-3 uppercase tracking-wider">
+                  Social
+                </div>
                 <div className="space-y-2">
-                  <a href="https://github.com/shihao-lao" className="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://github.com/shihao-lao"
+                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <span className="w-6 h-6 flex items-center justify-center text-gray-600">
                       🔗
                     </span>
                     <span className="text-sm text-gray-700">GitHub</span>
                   </a>
-                  <a href="https://juejin.cn/user/3994957074930676" className="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all" target="_blank" rel="noopener noreferrer">
+                  <a
+                    href="https://juejin.cn/user/3994957074930676"
+                    className="flex items-center gap-3 p-2 rounded-lg hover:bg-white hover:shadow-sm transition-all"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <span className="w-6 h-6 flex items-center justify-center text-blue-400">
                       🐦
                     </span>
@@ -120,8 +137,6 @@ export default async function HomePage() {
                   </a> */}
                 </div>
               </div>
-
-         
             </div>
           </div>
 
@@ -173,7 +188,10 @@ export default async function HomePage() {
                           <div className="flex flex-wrap gap-2 mb-4">
                             {post.tag && Array.isArray(post.tag) ? (
                               post.tag.map((tag) => (
-                                <span key={tag} className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm">
+                                <span
+                                  key={tag}
+                                  className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
+                                >
                                   {tag}
                                 </span>
                               ))
@@ -197,7 +215,6 @@ export default async function HomePage() {
                 </div>
               );
             })}
-            
 
             {/* 空状态 */}
             {safePosts.length === 0 && (

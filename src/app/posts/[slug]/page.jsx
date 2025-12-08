@@ -1,9 +1,9 @@
-
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 import { marked } from "marked";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import hljs from "highlight.js"; // 引入代码高亮库
 // 1. 创建自定义渲染器
 const renderer = new marked.Renderer();
@@ -74,33 +74,42 @@ export default async function PostPage({ params }) {
 
   // 解析 Markdown
   const htmlContent = marked.parse(content);
-  
+
   // 在服务器端生成随机背景图片
   // 对于静态生成的页面，这会在构建时生成一次
   // 对于动态生成的页面，这会在服务器请求时生成一次
   const backgroundImages = [
-    '/img/text1.jpg',
-    '/img/text2.jpg',
-    '/img/text3.jpg',
-    '/img/text4.jpg'
+    "/img/text1.jpg",
+    "/img/text2.jpg",
+    "/img/text3.jpg",
+    "/img/text4.jpg",
   ];
-  const randomBackground = backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
-
+  const randomBackground =
+    backgroundImages[Math.floor(Math.random() * backgroundImages.length)];
 
   return (
-    <div 
+    <div
       className="min-h-screen py-15 relative overflow-hidden"
       style={{
         backgroundImage: `url(${randomBackground})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-        backgroundAttachment: 'fixed'
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundAttachment: "fixed",
       }}
     >
       {/* 模糊覆盖层 */}
       <div className="absolute inset-0  opacity-5 backdrop-blur-lg z-0"></div>
       <article className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10">
+        {/* 返回首页链接 */}
+        <div className="mb-8 text-left">
+          <Link 
+            href="/" 
+            className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium transition-colors duration-200"
+          >
+            <span className="mr-1">←</span> 返回首页
+          </Link>
+        </div>
         {/* 文章头部 */}
         <header className="mb-12 text-center">
           <h1 className="text-3xl md:text-5xl font-extrabold mb-6 text-gray-900 dark:text-white tracking-tight leading-tight">
