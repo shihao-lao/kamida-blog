@@ -3,6 +3,8 @@ import Image from "next/image";
 import { getAllPosts } from "@/lib/posts";
 import { Calendar } from "lucide-react";
 import Footer from "@/components/Footer";
+import ThemeToggle from "@/components/ThemeToggle";
+import VisitCounter from "@/components/VisitCounter";
 
 export default async function HomePage() {
   const posts = await getAllPosts();
@@ -30,10 +32,11 @@ export default async function HomePage() {
       </div> */}
       {/* 欢迎title */}
       <div className="container mx-auto px-4 md:px-6 pt-16">
-        <div className="text-center animate-fadeIn">
+        <div className="text-center animate-fadeIn flex items-center justify-center gap-4">
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
             欢迎来到Kamida的个人博客
           </h1>
+          <ThemeToggle />
         </div>
       </div>
       {/* 主要内容区域 */}
@@ -93,6 +96,11 @@ export default async function HomePage() {
                     热爱技术的前端开发者，喜欢分享学习心得和技术见解。
                   </p>
                 </div>
+              </div>
+
+              {/* 访问次数统计 */}
+              <div className="mb-6 px-4">
+                <VisitCounter />
               </div>
 
               {/* 社交媒体链接 */}
