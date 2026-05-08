@@ -34,12 +34,18 @@ export default function VisitCounter() {
   };
 
   return (
-    <div className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-700 rounded-lg shadow-sm">
-      <Eye className="w-5 h-5 text-blue-500 dark:text-blue-400" />
-      <span className="text-sm text-gray-600 dark:text-gray-300">
+    <div 
+      className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all"
+      style={{ 
+        backgroundColor: 'var(--brand-primary-light)',
+        border: '1px solid var(--border-primary)'
+      }}
+    >
+      <Eye className="w-5 h-5" style={{ color: 'var(--brand-primary)' }} />
+      <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
         访问次数
       </span>
-      <span className="font-bold text-blue-600 dark:text-blue-400 text-lg">
+      <span className="font-bold text-lg" style={{ color: 'var(--brand-primary)' }}>
         {loading ? (
           <span className="animate-pulse">...</span>
         ) : (

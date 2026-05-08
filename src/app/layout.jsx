@@ -12,7 +12,7 @@ export default function RootLayout({ children }) {
     <html lang="zh-CN" suppressHydrationWarning={true}>
       <body className="bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
         <ThemeProvider>
-          {/* <Header /> */}
+          <Header />
           <main className="">{children}</main>
         </ThemeProvider>
       </body>
