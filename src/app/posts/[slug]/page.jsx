@@ -169,15 +169,32 @@ export default async function PostPage({ params }) {
       className="min-h-screen py-16 relative overflow-hidden"
       style={{ background: 'var(--bg-primary)' }}
     >
-      <div className="fixed inset-0 z-0 opacity-5">
-        <Image
-          src={randomBackground}
-          alt="文章背景"
-          fill
-          priority
-          sizes="100vw"
-          quality={65}
-          className="object-cover object-center"
+      <div className="fixed inset-0 z-0">
+        <div
+          className="absolute inset-0"
+          style={{
+            opacity: 'var(--bg-image-opacity)',
+          }}
+        >
+          <Image
+            src={randomBackground}
+            alt="文章背景"
+            fill
+            priority
+            sizes="100vw"
+            quality={80}
+            className="object-cover object-center"
+            style={{
+              filter: 'var(--bg-image-filter)',
+              transform: 'scale(1.05)',
+            }}
+          />
+        </div>
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'var(--bg-image-gradient)',
+          }}
         />
       </div>
 
@@ -226,7 +243,9 @@ export default async function PostPage({ params }) {
             <div
               className="rounded-2xl p-6 md:p-12 shadow-xl"
               style={{
-                background: 'var(--bg-secondary)',
+                background: 'var(--bg-overlay)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
                 border: '1px solid var(--border-primary)',
               }}
             >
