@@ -46,10 +46,7 @@ marked.use({ renderer: renderer, gfm: true, breaks: true });
 
 function AISummarySkeleton() {
   return (
-    <div
-      className="rounded-2xl p-6 shadow-xl"
-      style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-primary)' }}
-    >
+    <div className="ai-glass-card p-6">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
           AI 总结
@@ -70,10 +67,7 @@ function AISummarySkeleton() {
 async function AISummaryPanel({ slug }) {
   if (!process.env.CHATANYWHERE_API_KEY) {
     return (
-      <div
-        className="rounded-2xl p-6 shadow-xl"
-        style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-primary)' }}
-      >
+      <div className="ai-glass-card p-6">
         <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
           AI 总结
         </h2>
@@ -100,10 +94,7 @@ async function AISummaryPanel({ slug }) {
   }
 
   return (
-    <div
-      className="rounded-2xl p-6 shadow-xl"
-      style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-primary)' }}
-    >
+    <div className="ai-glass-card p-6">
       <h2 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>
         AI 总结
       </h2>
@@ -126,11 +117,7 @@ async function AISummaryPanel({ slug }) {
             {tags.map((tag, idx) => (
               <span
                 key={`${idx}-${String(tag).slice(0, 20)}`}
-                className="text-xs px-2 py-1 rounded-full"
-                style={{
-                  background: 'var(--brand-primary-light)',
-                  color: 'var(--brand-primary)',
-                }}
+                className="glass-tag text-xs px-2 py-1 rounded-full"
               >
                 {String(tag)}
               </span>
@@ -165,19 +152,33 @@ export default async function PostPage({ params }) {
   const randomBackground = backgroundImages[sum % backgroundImages.length];
 
   return (
-    <div
-      className="min-h-screen py-16 relative overflow-hidden"
-      style={{ background: 'var(--bg-primary)' }}
-    >
-      <div className="fixed inset-0 z-0 opacity-5">
-        <Image
-          src={randomBackground}
-          alt="文章背景"
-          fill
-          priority
-          sizes="100vw"
-          quality={65}
-          className="object-cover object-center"
+    <div className="article-page min-h-screen py-16 relative overflow-hidden">
+      <div className="fixed inset-0 z-0">
+        <div
+          className="absolute inset-0"
+          style={{
+            opacity: 'var(--bg-image-opacity)',
+          }}
+        >
+          <Image
+            src={randomBackground}
+            alt="文章背景"
+            fill
+            priority
+            sizes="100vw"
+            quality={80}
+            className="object-cover object-center"
+            style={{
+              filter: 'var(--bg-image-filter)',
+              transform: 'scale(1.05)',
+            }}
+          />
+        </div>
+        <div
+          className="absolute inset-0"
+          style={{
+            background: 'var(--bg-image-gradient)',
+          }}
         />
       </div>
 
@@ -224,11 +225,7 @@ export default async function PostPage({ params }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           <article className="lg:col-span-8">
             <div
-              className="rounded-2xl p-6 md:p-12 shadow-xl"
-              style={{
-                background: 'var(--bg-secondary)',
-                border: '1px solid var(--border-primary)',
-              }}
+              className="article-glass p-6 md:p-12"
             >
               <div
                 className="prose prose-lg max-w-none"
