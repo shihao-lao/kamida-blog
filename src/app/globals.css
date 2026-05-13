@@ -171,8 +171,7 @@ body {
 }
 
 .article-page {
-  background:
-    linear-gradient(135deg, var(--page-gradient-start) 0%, var(--bg-primary) 52%, var(--page-gradient-end) 100%);
+  background: transparent;
 }
 
 .article-glass,
@@ -206,8 +205,8 @@ body {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: linear-gradient(135deg, var(--glass-highlight), transparent 34%);
-  opacity: 0.48;
+  background: linear-gradient(160deg, var(--glass-highlight), transparent 40%);
+  opacity: 0.35;
 }
 
 .article-glass > *,
@@ -232,11 +231,19 @@ body {
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .article-glass {
-    background: var(--bg-elevated);
+    background: rgba(255, 255, 255, 0.85);
+  }
+  .dark .article-glass,
+  [data-theme="dark"] .article-glass {
+    background: rgba(15, 23, 42, 0.85);
   }
 
   .ai-glass-card {
-    background: var(--bg-secondary);
+    background: rgba(255, 255, 255, 0.8);
+  }
+  .dark .ai-glass-card,
+  [data-theme="dark"] .ai-glass-card {
+    background: rgba(15, 23, 42, 0.8);
   }
 }
 
