@@ -231,7 +231,7 @@ body {
 
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .article-glass {
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(250, 247, 242, 0.88);
   }
   .dark .article-glass,
   [data-theme="dark"] .article-glass {
@@ -239,7 +239,7 @@ body {
   }
 
   .ai-glass-card {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(248, 245, 240, 0.82);
   }
   .dark .ai-glass-card,
   [data-theme="dark"] .ai-glass-card {
