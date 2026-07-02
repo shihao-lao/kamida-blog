@@ -1,23 +1,45 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
+import clientPromise from "./mongodb";
 
-const postsDirectory = path.join(process.cwd(), "src/posts");
+/**
+ * Get all posts from MongoDB, sorted by date descending
+ */
+export async function getAllPosts() {
+  try {
+    const client = await clientPromise;
+    const db = client.db("kamida-blog");
+    const posts = await db
+      .collection("posts")
+      .find({}, { projection: { content: 0 } })
+      .sort({ date: -1 })
+      .toArray();
 
-export function getAllPosts() {
-  const fileNames = fs.readdirSync(postsDirectory);
+    return posts.map((post) => ({
+      ...post,
+      _id: post._id.toString(),
+    }));
+  } catch (error) {
+    console.warn("Failed to fetch posts from MongoDB:", error.message);
+    return [];
+  }
+}
 
-  const posts = fileNames.map((fileName) => {
-    const slug = fileName.replace(/\.md$/, "");
-    const fullPath = path.join(postsDirectory, fileName);
-    const fileContents = fs.readFileSync(fullPath, "utf8");
-    const { data } = matter(fileContents);
+/**
+ * Get a single post by slug (includes content)
+ */
+export async function getPostBySlug(slug) {
+  try {
+    const client = await clientPromise;
+    const db = client.db("kamida-blog");
+    const post = await db.collection("posts").findOne({ slug });
+
+    if (!post) return null;
 
     return {
-      slug,
-      ...data,
+      ...post,
+      _id: post._id.toString(),
     };
-  });
-
-  return posts.sort((a, b) => (a.date > b.date ? -1 : 1));
+  } catch (error) {
+    console.warn("Failed to fetch post from MongoDB:", error.message);
+    return null;
+  }
 }

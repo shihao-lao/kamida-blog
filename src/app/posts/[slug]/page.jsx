@@ -1,12 +1,11 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
 import { marked } from "marked";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { getPostBySlug } from "@/lib/posts";
 import { articleSummary } from "@/utils/api";
 import AISummaryTypewriter from "@/components/AISummaryTypewriter";
+import ViewCounter from "@/components/ViewCounter";
 import { Suspense } from "react";
 import hljs from "highlight.js";
 
@@ -17,7 +16,7 @@ renderer.heading = function ({ text, depth }) {
   const escapedText = textStr
     .toLowerCase()
     .replace(/\s+/g, "-")
-    .replace(/[^\w\u4e00-\u9fa5\-]/g, "");
+    .replace(/[^\w一-龥\-]/g, "");
 
   return `<h${depth} id="${escapedText}" class="scroll-mt-24 relative group">
     <a href="#${escapedText}" class="no-underline hover:underline">
@@ -64,7 +63,7 @@ function AISummarySkeleton() {
   );
 }
 
-async function AISummaryPanel({ slug }) {
+async function AISummaryPanel({ content, title }) {
   if (!process.env.CHATANYWHERE_API_KEY) {
     return (
       <div className="ai-glass-card p-6">
@@ -83,10 +82,7 @@ async function AISummaryPanel({ slug }) {
   let summaryError = "";
 
   try {
-    const filePath = path.join(process.cwd(), "src/posts", `${slug}.md`);
-    const fileContent = fs.readFileSync(filePath, "utf8");
-    const { data, content } = matter(fileContent);
-    const result = await articleSummary(content, { title: data.title });
+    const result = await articleSummary(content, { title });
     summary = typeof result?.summary === "string" ? result.summary : "";
     tags = Array.isArray(result?.tags) ? result.tags : [];
   } catch (error) {
@@ -131,15 +127,13 @@ async function AISummaryPanel({ slug }) {
 
 export default async function PostPage({ params }) {
   const { slug } = await params;
-  const filePath = path.join(process.cwd(), "src/posts", `${slug}.md`);
+  const post = await getPostBySlug(slug);
 
-  if (!fs.existsSync(filePath)) {
+  if (!post) {
     notFound();
   }
 
-  const fileContent = fs.readFileSync(filePath, "utf8");
-  const { data, content } = matter(fileContent);
-  const htmlContent = marked.parse(content);
+  const htmlContent = marked.parse(post.content);
 
   const backgroundImages = [
     "/img/text1.jpg",
@@ -199,16 +193,16 @@ export default async function PostPage({ params }) {
             className="text-3xl md:text-5xl font-extrabold mb-6 tracking-tight leading-tight"
             style={{ color: 'var(--text-primary)' }}
           >
-            {data.title}
+            {post.title}
           </h1>
 
           <div className="flex justify-center items-center space-x-4 text-sm" style={{ color: 'var(--text-tertiary)' }}>
-            {data.date && (
-              <time dateTime={data.date} className="flex items-center">
-                <span className="mr-1">📅</span> {data.date}
+            {post.date && (
+              <time dateTime={post.date} className="flex items-center">
+                <span className="mr-1">📅</span> {post.date}
               </time>
             )}
-            {data.category && (
+            {post.category && (
               <span
                 className="px-2 py-1 rounded-full text-xs font-semibold"
                 style={{
@@ -216,9 +210,10 @@ export default async function PostPage({ params }) {
                   color: 'var(--brand-primary)',
                 }}
               >
-                {data.category}
+                {post.category}
               </span>
             )}
+            <ViewCounter slug={post.slug} type="article" />
           </div>
         </header>
 
@@ -237,7 +232,7 @@ export default async function PostPage({ params }) {
 
           <aside className="lg:col-span-4 self-start lg:sticky lg:top-8">
             <Suspense fallback={<AISummarySkeleton />}>
-              <AISummaryPanel slug={slug} />
+              <AISummaryPanel content={post.content} title={post.title} />
             </Suspense>
           </aside>
         </div>
@@ -254,4 +249,3 @@ export default async function PostPage({ params }) {
     </div>
   );
 }
-

@@ -1,9 +1,15 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
+import { getProfile } from "@/lib/data";
 
-export default function About() {
+export default async function About() {
+  const profile = await getProfile();
+
+  const name = profile?.name || "Kamida";
+  const bio = profile?.bio || "热爱技术的前端开发者，喜欢分享学习心得和技术见解。";
+  const avatar = profile?.avatar || "/img/avatar.jpg";
+  const github = profile?.contact?.social?.github || "https://github.com/shihao-lao";
+
   return (
     <main
       className="min-h-screen py-16 px-6 font-sans"
@@ -37,7 +43,7 @@ export default function About() {
               style={{ background: 'var(--bg-secondary)' }}
             >
               <Image
-                src="/img/avatar.jpg"
+                src={avatar}
                 alt="Profile Avatar"
                 fill
                 className="object-cover"
@@ -60,10 +66,10 @@ export default function About() {
                 className="leading-relaxed"
                 style={{ color: 'var(--text-secondary)' }}
               >
-                我是 Kamida，一位热衷于写代码的前端开发小白，写博客来记录代码日常。
+                我是 {name}，一位热衷于写代码的前端开发小白，写博客来记录代码日常。
               </p>
               <p style={{ color: 'var(--text-secondary)' }}>
-                我的代码哲学是：不仅要跑得通，更要跑得快、维护得爽。
+                {bio}
               </p>
             </section>
 
@@ -98,12 +104,13 @@ export default function About() {
               <p style={{ color: 'var(--text-secondary)' }}>
                 欢迎通过 GitHub 与我交流：
                 <a
-                  href="https://github.com/shihao-lao"
+                  href={github}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="hover:underline ml-1 font-medium"
                   style={{ color: 'var(--brand-primary)' }}
                 >
-                  @kamida
+                  @{name}
                 </a>
               </p>
             </section>
@@ -253,4 +260,3 @@ export default function About() {
     </main>
   );
 }
-

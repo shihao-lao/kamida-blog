@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { getAllPosts } from "@/lib/posts";
 import Footer from "@/components/Footer";
+import MottoCarousel from "@/components/MottoCarousel";
+import ViewCounter from "@/components/ViewCounter";
 
 export default async function HomePage() {
   const posts = await getAllPosts();
@@ -88,29 +90,13 @@ export default async function HomePage() {
                 </div>
               </div>
 
-              {/* 座右铭 */}
-              <div className="mb-8">
-                <div
-                  className="text-sm italic mb-3"
-                  style={{ color: 'var(--text-secondary)' }}
-                >
-                  Motto
-                </div>
-                <div
-                  className="p-4 rounded-lg"
-                  style={{
-                    background: 'var(--bg-primary)',
-                    boxShadow: 'var(--shadow-sm)',
-                  }}
-                >
-                  <p style={{ color: 'var(--text-primary)' }}>
-                    热爱技术的前端开发者，喜欢分享学习心得和技术见解。
-                  </p>
-                </div>
+              {/* 座右铭轮播 */}
+              <div className="px-4">
+                <MottoCarousel />
               </div>
 
               {/* 社交媒体链接 */}
-              <div className="mb-6">
+              <div className="mb-6 px-4">
                 <div
                   className="text-sm font-bold mb-3 uppercase tracking-wider"
                   style={{ color: 'var(--text-primary)' }}
@@ -136,6 +122,13 @@ export default async function HomePage() {
                     <span className="w-6 h-6 flex items-center justify-center">🐦</span>
                     <span className="text-sm">稀土掘金</span>
                   </a>
+                </div>
+              </div>
+
+              {/* 访问量 */}
+              <div className="px-4 pt-2 border-t" style={{ borderColor: 'var(--border-primary)' }}>
+                <div className="flex items-center justify-center py-3">
+                  <ViewCounter slug="global" type="page" />
                 </div>
               </div>
             </div>
