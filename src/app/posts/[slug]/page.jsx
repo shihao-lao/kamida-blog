@@ -6,6 +6,7 @@ import { getPostBySlug } from "@/lib/posts";
 import { articleSummary } from "@/utils/api";
 import AISummaryTypewriter from "@/components/AISummaryTypewriter";
 import ViewCounter from "@/components/ViewCounter";
+import CommentSection from "@/components/CommentSection";
 import { Suspense } from "react";
 import hljs from "highlight.js";
 
@@ -230,10 +231,11 @@ export default async function PostPage({ params }) {
             </div>
           </article>
 
-          <aside className="lg:col-span-4 self-start lg:sticky lg:top-8">
+          <aside className="lg:col-span-4 self-start lg:sticky lg:top-8 space-y-6">
             <Suspense fallback={<AISummarySkeleton />}>
               <AISummaryPanel content={post.content} title={post.title} />
             </Suspense>
+            <CommentSection slug={post.slug} />
           </aside>
         </div>
 
